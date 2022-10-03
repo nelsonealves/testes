@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@internal/.prisma/Atrix/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("ATRIX_DATABASE_URL")
+}
+
+model tblclients {
+  id          Int           @id @default(autoincrement())
+  firstName   String?       @db.VarChar(250)
+  lastName    String?       @db.VarChar(250)
+  email       String        @db.VarChar(250)
+  address1    String        @db.VarChar(200)
+  address2    String        @db.VarChar(200)
+  city        String        @db.VarChar(100)
+  state       String        @db.VarChar(100)
+  postcode    String        @db.VarChar(30)
+  document    String?       @db.VarChar(100)
+  country     String        @db.VarChar(60)
+  updated_at  DateTime      @db.Date
+  tblcontacts tblcontacts[] @relation("tblcontacts_tblclient")
+  tblhosting  tblhosting[]  @relation("tblclients_tblhosting")
+  tbltickets  tbltickets[]  @relation("tblclients_tbltickets")
+}
+
+model tblcontacts {
+  id          Int        @id @default(autoincrement())
+  userid      Int        @db.Int
+  firstname   String     @db.VarChar(150)
+  lastname    String     @db.VarChar(150)
+  phonenumber String     @db.VarChar(40)
+  tblclients  tblclients @relation("tblcontacts_tblclient", references: [id], fields: [userid])
+}
+
+model tblhosting {
+  id                      Int                      @id @default(autoincrement())
+  userid                  Int                      @db.Int
+  packageid               Int?                      @db.Int
+  domain                  String?                  @db.VarChar(100)
+  username                String?                  @db.VarChar(100)
+  password                String?                  @db.VarChar(100)
+  updated_at              DateTime?                @db.Date
+  tblclients              tblclients               @relation("tblclients_tblhosting", references: [id], fields: [userid])
+  tblproducts             tblproducts?             @relation("tblproducts_tblhosting", references: [id], fields: [packageid])
+  // tbladdress  tbladdress  @relation("tbladdress_tblhosting", references: [relid], fields: [id])
+  tbladdress              tbladdress?              @relation("tbladdress_tblhosting")
+  tbltickets              tbltickets[]             @relation("tblhosting_tbltickets")
+  tblhostingconfigoptions tblhostingconfigoptions? @relation("tblhostingconfigoptions_tblhosting")
+}
+
+model tblproducts {
+  id               Int              @id @default(autoincrement())
+  name             String           @db.Text
+  gid              Int              @db.Int
+  tblhosting       tblhosting[]     @relation("tblproducts_tblhosting")
+  tblproductgroups tblproductgroups @relation("tblproducts_tblproductgroups", references: [id], fields: [gid])
+}
+
+enum subcategory {
+  varejo
+  corporativo
+}
+
+model tblproductgroups {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.Text
+  subcategory subcategory   @default(corporativo)
+  tblproducts tblproducts[] @relation("tblproducts_tblproductgroups")
+}
+
+model tblhostingconfigoptions {
+  optionid                   Int                         @unique @db.Int
+  relid                      Int                         @unique @db.Int
+  tblhosting                 tblhosting                  @relation("tblhostingconfigoptions_tblhosting", references: [id], fields: [relid])
+  tblproductconfigoptionssub tblproductconfigoptionssub? @relation("tblproductconfigoptionssub_tblhostingconfigoptions")
+}
+
+model tblproductconfigoptionssub {
+  id                      Int                     @id @default(autoincrement())
+  optionname              String                  @db.Text
+  tblhostingconfigoptions tblhostingconfigoptions @relation("tblproductconfigoptionssub_tblhostingconfigoptions", references: [optionid], fields: [id])
+}
+
+model tbladdress {
+  id         Int        @id @default(autoincrement())
+  relid      Int        @unique @db.UnsignedInt
+  postcode   String?    @db.VarChar(30)
+  address    String?    @db.VarChar(250)
+  number     Int?       @db.Int
+  room       String?    @db.VarChar(30)
+  complement String?    @db.VarChar(250)
+  city       Int?       @unique @db.UnsignedInt
+  state      String?    @db.VarChar(100)
+  tblhosting tblhosting @relation("tbladdress_tblhosting", references: [id], fields: [relid])
+  tblcities  tblcities? @relation("tbladdress_tblcities")
+  // tblhosting tblhosting? @relation("tbladdress_tblhosting")
+}
+
+model tblcities {
+  id        Int        @id @default(autoincrement())
+  name      String?    @db.VarChar(30)
+  state     String?    @db.VarChar(30)
+  tbladress tbladdress @relation("tbladdress_tblcities", references: [city], fields: [id])
+}
+
+model tbltickets {
+  id                   Int                  @id @db.Int
+  userid               Int?                 @db.Int
+  did                  Int                  @db.Int
+  serviceid            Int?                 @db.Int
+  title                String               @db.Text
+  message              String               @db.Text
+  status               String               @db.VarChar(64)
+  typerequest          Int?                 @db.Int
+  tblhosting           tblhosting?          @relation("tblhosting_tbltickets", references: [id], fields: [serviceid])
+  tblclients           tblclients?          @relation("tblclients_tbltickets", references: [id], fields: [userid])
+  tblticketdepartments tblticketdepartments @relation("tblticketdepartments_tbltickets", references: [id], fields: [did])
+}
+
+model tblticketdepartments {
+  id        Int          @id @default(autoincrement())
+  name      String       @db.Text
+  tblticket tbltickets[] @relation("tblticketdepartments_tbltickets")
+}

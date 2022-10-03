@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@internal/.prisma/CorpIntegrator/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model application {
+  id                 Int                 @id @default(autoincrement())
+  name               String              @db.VarChar(100)
+  application_of     events_handle[]     @relation("application_of")
+  application_to     events_handle[]     @relation("application_to")
+  application_name   status_handle[]     @relation("application_name")
+  application_lastid lastid_table_jobs[] @relation("application_lastid")
+}
+
+model status {
+  id                 Int             @id @default(autoincrement())
+  name               String          @db.VarChar(50)
+  application_status status_handle[] @relation("application_status")
+}
+
+model status_handle {
+  id                 Int             @id @default(autoincrement())
+  type               String          @db.VarChar(50)
+  id_application     Int             @db.Int
+  id_status          Int             @db.Int
+  id_in_application  Int?            @db.Int
+  application_status status          @relation("application_status", references: [id], fields: [id_status])
+  application_name   application     @relation("application_name", references: [id], fields: [id_application])
+  status_of_events   events_handle[] @relation("status_of")
+  status_to_events   events_handle[] @relation("status_to")
+}
+
+model events_handle {
+  id                Int           @id @default(autoincrement())
+  id_application_of Int           @db.Int
+  id_application_to Int           @db.Int
+  id_status_of      Int           @default(0)
+  id_status_to      Int           @default(0)
+  id_department_of  Int           @db.Int
+  id_department_to  Int           @db.Int
+  id_service_of     Int           @db.Int
+  id_service_to     Int           @db.Int
+  status_to_event   status_handle @relation("status_to", references: [id], fields: [id_status_to])
+  status_of_event   status_handle @relation("status_of", references: [id], fields: [id_status_of])
+  application_to    application   @relation("application_to", references: [id], fields: [id_application_to])
+  application_of    application   @relation("application_of", references: [id], fields: [id_application_of])
+  status_contract_handle status_contract_handle? @relation("contract_events_handle", fields: [id], references: [id_event_handle])
+}
+
+model ticket_data {
+  id_atrix Int @unique @db.Int
+  id_otrs  Int @unique @db.Int
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
+}
+
+model contract_data {
+  id_atrix Int @unique @db.Int
+  id_otrs  Int @unique @db.Int
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
+}
+
+model time_jobs {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  lastrunned DateTime @db.Timestamp()
+}
+
+model lastid_table_jobs {
+  id                 Int         @id @default(autoincrement())
+  id_application     Int
+  name               String      @db.VarChar(255)
+  value              Int
+  application_lastid application @relation("application_lastid", references: [id], fields: [id_application])
+}
+
+model status_contract_handle {
+  id_event_handle Int @unique @db.Int
+  status_atrix String @db.VarChar(255)
+  events_handle events_handle[] @relation("contract_events_handle")
+}

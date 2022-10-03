@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@internal/.prisma/Otrs/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("OTRS_DATABASE_URL")
+}
+
+model customer_company {
+  customer_id   String          @id @db.VarChar(150)
+  name          String          @unique @db.VarChar(200)
+  CNPJ          String          @db.VarChar(100)
+  street        String          @db.VarChar(200)
+  zip           String          @db.VarChar(200)
+  city          String          @db.VarChar(200)
+  country       String          @db.VarChar(200)
+  comments      String          @db.VarChar(250)
+  district      String          @db.VarChar(200)
+  UF            String          @db.VarChar(2)
+  valid_id      Int             @db.Int
+  create_time   DateTime        @db.Date @default(now())
+  change_time   DateTime        @db.Date @default(now())
+  customer_user customer_user[] @relation("customer_user_company")
+}
+
+model customer_user {
+  id               Int               @id @default(autoincrement())
+  login            String            @unique @db.VarChar(200)
+  customer_id      String            @unique @db.VarChar(250)
+  customer_company customer_company? @relation("customer_user_company", fields: [customer_id], references: [customer_id])
+  ticket           ticket[]          @relation("customer_user_ticket")
+
+  @@unique([login, customer_id], name: "customer_ticket")
+}
+
+model ticket {
+  id                  Int      @id @default(autoincrement())
+  queue_id            Int      @db.Int()
+  service_id          Int?     @db.Int()
+  customer_id         String?  @unique @db.VarChar(250)
+  customer_user_id    String?  @unique @db.VarChar(250)
+  title               String   @db.VarChar(250)
+  ticket_lock_id      Int      @db.SmallInt() // ticket_lock_type table
+  user_id             Int      @db.Int() //users table
+  responsible_user_id Int      @db.Int() // users table
+  ticket_priority_id  Int      @db.SmallInt() //ticket_priority table
+  ticket_state_id     Int      @db.SmallInt() // ticket_state table
+  create_by           Int      @db.Int() // users table
+  change_by           Int      @db.Int() // users table
+  tn                  String
+  change_time         DateTime @db.Date
+
+  articles      article[]      @relation("ticket_articles")
+  ticket_state  ticket_state   @relation("ticket_ticket_state", fields: [ticket_state_id], references: [id])
+  queue         queue          @relation("ticket_queue", fields: [queue_id], references: [id])
+  service       service?       @relation("ticket_service", fields: [service_id], references: [id])
+  customer_user customer_user? @relation("customer_user_ticket", fields: [customer_user_id, customer_id], references: [login, customer_id])
+
+  @@index([customer_user_id, customer_id], name: "customer_ticket")
+}
+
+model queue {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(200)
+  ticket ticket[] @relation("ticket_queue")
+}
+
+model service {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(200)
+  ticket ticket[] @relation("ticket_service")
+}
+
+model ticket_state {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(200)
+  ticket ticket[] @relation("ticket_ticket_state")
+}
+
+model article {
+  id                           Int                            @id @unique @default(autoincrement())
+  ticket_id                    Int
+  article_sender_type_id       Int                            @db.SmallInt()
+  communication_channel_id     Int                            @db.Int()
+  is_visible_for_customer      Int                            @db.SmallInt()
+  search_index_needs_rebuild   Int                            @db.SmallInt()
+  create_time                  DateTime                       @default(now())
+  change_time                  DateTime                       @default(now())
+  create_by                    Int                            @db.Int()
+  change_by                    Int                            @db.Int()
+  article_data_mime            article_data_mime[]
+  ticket                       ticket                         @relation("ticket_articles", fields: [ticket_id], references: [id])
+  article_data_mime_attachment article_data_mime_attachment[] @relation("article_attachment")
+}
+
+model article_data_mime {
+  id                  Int      @id @unique @default(autoincrement())
+  article_id          Int
+  a_body              String?
+  a_subject           String?
+  incoming_time       Int      @db.Int()
+  create_time         DateTime @default(now())
+  change_time         DateTime @default(now())
+  create_by           Int      @db.Int()
+  change_by           Int      @db.Int()
+  article_id_relation article  @relation(references: [id], fields: [article_id])
+}
+
+model article_data_mime_attachment {
+  id                Int      @id @unique @default(autoincrement())
+  article_id        Int      @db.Int
+  filename          String?  @db.VarChar(250)
+  content_size      String?  @db.VarChar(30)
+  content           Bytes?   @db.Blob
+  create_time       DateTime @db.Date
+  change_time       DateTime @db.Date
+  article_data_mime article  @relation("article_attachment", fields: [article_id], references: [id])
+}
+
+model xml_storage {
+  xml_type           String             @unique @db.VarChar(200)
+  xml_key            Int                @db.Int
+  xml_content_key    String             @db.VarChar(250)
+  xml_content_value  String             @db.VarChar(250)
+  // general_catalog general_catalog @relation("xml_general_catalog")
+  configitem_version configitem_version @relation("config_item_xml", fields: [xml_key], references: [id])
+
+  // configitem configitem @relation("configitem_xml")
+}
+
+model configitem_version {
+  id            Int           @id @default(autoincrement())
+  configitem_id Int           @unique @db.Int
+  name          String        @db.VarChar(250)
+  definition_id Int           @db.Int
+  depl_state_id Int           @db.Int
+  create_by     Int           @db.Int
+  xml_storage_x xml_storage[] @relation("config_item_xml")
+  configitem    configitem    @relation("configitem_version_configitem", fields: [configitem_id], references: [id])
+}
+
+model general_catalog {
+  id                    Int      @id @default(autoincrement())
+  general_catalog_class String   @db.VarChar(100)
+  name                  String   @db.VarChar(100)
+  valid_id              Int      @db.Int
+  comments              String?  @db.VarChar(200)
+  create_time           DateTime @db.Date
+  create_by             Int      @db.Int
+  change_time           DateTime @db.Date
+  change_by             Int      @db.Int
+  // xml_storage    xml_storage    @relation("xml_general_catalog", fields: [id], references: [id])
+}
+
+model configitem {
+  id                 Int                 @id @default(autoincrement())
+  configitem_number  String              @db.VarChar(200)
+  class_id           Int                 @db.Int
+  last_version_id    Int                 @unique @db.Int
+  cur_depl_state_id  Int                 @db.Int
+  cur_inci_state_id  Int                 @db.Int
+  create_time        DateTime            @db.Date
+  create_by          Int                 @db.Int
+  change_time        DateTime            @db.Date
+  change_by          Int                 @db.Int
+  configitem_version configitem_version? @relation("configitem_version_configitem")
+  link_relation      link_relation?      @relation("configitem_xml", fields: [id], references: [target_key])
+  // xml_storage   xml_storage[] @relation("configitem_xml", fields: [])
+}
+
+model link_relation {
+  source_object_id Int         @unique @db.SmallInt
+  source_key       String      @unique @db.VarChar(50)
+  target_object_id Int         @unique @db.SmallInt
+  target_key       Int         @unique @db.Int
+  type_id          Int         @unique @db.SmallInt
+  state_id         Int         @db.SmallInt
+  create_time      DateTime    @db.Date
+  create_by        Int         @db.Int
+  configitem       configitem? @relation("configitem_xml")
+}
+
+model dynamic_field_value {
+  id         Int    @id @default(autoincrement())
+  field_id   Int    @db.Int
+  object_id  Int    @db.Int
+  value_text String @db.Text
+}
