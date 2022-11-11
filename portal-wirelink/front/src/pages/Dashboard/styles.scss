@@ -1,0 +1,170 @@
+@import '../../variables';
+
+.dashContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-width: 1500px;
+  overflow: auto;
+
+    .header {
+    display: flex;
+
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 50px;
+    background-color: $tertiary;
+    padding: 0 4% 0 4%;
+
+    img {
+      width: 170px;
+    }
+
+    .menu {
+      display: flex;
+
+      flex-direction: column;
+      align-items: flex-end;
+
+      button {
+        background: transparent;
+        color: #fff;
+        font-family: PoppinsMedium;
+        font-size: 1.1rem;
+      }
+      img {
+        height: 10px;
+        width: 10px;
+        margin-left: 10px;
+      }
+      > span {
+        color: $primary;
+        font-family: PoppinsBold;
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .dashContent {
+    margin: 5% 10% 0 10%;
+    z-index: 3;
+    .dashButtonsContainer {
+      display: flex;
+      background: $quaternary;
+      width: auto;
+      .button {
+        background-color: #fff;
+        display: flex;
+        min-width: 200px;
+        justify-content: center;
+        align-items: center;
+        border-bottom: none;
+        margin-top: 4px;
+        margin-left: 4px;
+        padding: 0 20px;
+
+        img {
+          height: 30px;
+          width: 30px;
+          margin-right: 10px;
+        }
+        span {
+          color: $gray100;
+          font-size: 1.5rem;
+          font-family: PoppinsMedium;
+        }
+      }
+      .selectedPage {
+        background-color: $quaternary;
+        margin-top: 8px;
+        span {
+          color: $secundary;
+          font-family: PoppinsBold;
+          position: relative;
+          &::after{
+            content: "";
+            height: 3px;
+            width: 100%;
+            background-color: $tertiary;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+}
+.ant-dropdown-menu {
+  background: $tertiary !important;
+}
+
+.ant-dropdown-menu-item {
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  color: #fff !important;
+  text-transform: uppercase  !important;
+  font-weight: bold  !important;
+
+  .check {
+    border-radius: 50%;
+    margin-right: 8px;
+    width: 10px;
+    height: 10px;
+  }
+
+  &:hover {
+    background: none !important;
+    color: $detalhes !important;
+  }
+}
+
+.ant-dropdown-menu-item-divider {
+  height: 6px !important;
+  width: 55%;
+  overflow: hidden;
+  line-height: 0;
+  background-color: $detalhes !important;
+  float: right;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-danger {
+  color: $primary !important;
+  text-align: end;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-active,
+.ant-dropdown-menu-item.ant-dropdown-menu-item-selected{
+  background: none !important;
+  color: $detalhes !important;
+
+  .check {
+    background-color: $detalhes !important;
+  }
+
+}
+
+.selectedItem {
+  color: $detalhes !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 140px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  color: $secundary;
+}
+
+.custom-scrollbar {
+  max-height: 600px;
+  overflow-y: auto;
+}

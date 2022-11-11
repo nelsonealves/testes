@@ -1,0 +1,233 @@
+@import '../../variables';
+
+.servicosContainer {
+  background-color: $quaternary;
+  margin-left: 2px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 0;
+  header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .headerTitulo {
+      display: flex;
+      justify-content: space-between;
+      .tituloPagina {
+        display: flex;
+        align-items: center;
+        .detalhe {
+          content: '';
+          width: 66px;
+          background: $detalhes;
+          height: 8px;
+          margin-right: 20px;
+        }
+        h1 {
+          font-size: 1.6rem;
+          color: $tertiary;
+          font-family: PoppinsBold;
+          margin: 0;
+        }
+      }
+      .pesquisar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35%;
+        height: 40px;
+        border: 1px solid $gray100;
+        background-color: #fff;
+        padding: 5px 10px;
+        margin: 0 40px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+
+        img {
+          height: 18px;
+          margin-right: 5px;
+        }
+        input {
+          width: 90%;
+          border: none;
+          outline: none;
+          color: $blue;
+
+          &::-webkit-input-placeholder {
+            color: $blue;
+          }
+
+          &:-moz-placeholder { /* Firefox 18- */
+              color: $blue;
+          }
+
+          &::-moz-placeholder {  /* Firefox 19+ */
+              color: $blue;
+          }
+
+          &:-ms-input-placeholder {
+              color: $blue;
+          }
+        }
+      }
+      .ingressoButton {
+        color: #fff;
+        font-family: PoppinsBold;
+        background-color: $secundary;
+        border-radius: 30px;
+        padding: 10px 20px;
+      }
+    }
+  }
+  .table {
+    margin-top: 20px;
+    button.tableCell{
+      height: 47px;
+      border: none;
+      margin-top: 2px;
+      border-bottom: 8px solid #fff;
+      box-sizing: border-box;
+      img {
+        padding-top: 4px;
+        height: 16px;
+      }
+    }
+    .tableCell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      color: $tertiary;
+      box-sizing: border-box;
+      padding: 12px;
+      width: 100%;
+      height: 47px;
+      img {
+        height: 22px;
+      }
+      span {
+        text-align: center;
+        font-family: PoppinsMedium;
+        line-height: 1.5rem;
+      }
+    }
+    .ticketsCell {
+      color: #fff;
+      background-color: $secundary;
+
+      span {
+        font-family: PoppinsMedium;
+      }
+    }
+    .stateCell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $encerrado;
+      padding: 8px;
+      color: #fff;
+      height: 47px;
+      img {
+        display: block;
+        height: 16px;
+      }
+      span {
+        text-align: center;
+        line-height: 10px;
+        font-size: 0.7rem;
+        font-family: PoppinsMedium;
+      }
+    }
+    .encerrado {
+      background-color: $andamento;
+    }
+  }
+
+  .column-title {
+    padding-left: 10px;
+  }
+
+  .ant-table-column-sorter {
+    padding-right: 10px;
+  }
+}
+.ant-modal-header {
+  padding: 0;
+  border: none !important;
+}
+.modalContainer {
+  background-color: $primary;
+  width: 300px;
+  .modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: $tertiary;
+    color: #fff;
+    font-size: 1rem;
+    font-family: PoppinsBold;
+    img {
+      height: 20px;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.5rem;
+      font-family: PoppinsBold;
+      height: 30px;
+      width: 30px;
+      padding: 0;
+      z-index: 10;
+    }
+  }
+  .modalContent {
+    background-color: $primary;
+    color: #fff;
+    padding: 10px 20px ;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    span span {
+      line-height: 2rem;
+      margin-left: 20px;
+    }
+  }
+}
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: $tertiary;
+  color: #fff;
+  font-size: 1rem;
+  font-family: PoppinsBold;
+  img {
+    height: 20px;
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: none;
+    border: 2px solid $detalhes;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: PoppinsMedium;
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    z-index: 10;
+  }
+}
+.ant-modal-header {
+  padding: 0 !important;
+}

@@ -1,0 +1,39 @@
+@import '../../variables';
+
+.textAreaContainer {
+  width: 100%;
+  margin-top: 10px;
+
+  &.branco {
+    .labeltTA {
+      color: #fff;
+      span {
+        margin: 0;
+      }
+  }
+  }
+}
+
+.labeltTA {
+  display: flex;
+  flex-direction: column;
+  color: $primary;
+  span {
+    font-family: PoppinsMedium;
+    margin-left: 10px;
+  }
+}
+
+.textArea {
+  flex: 1;
+  background: transparent;
+  border: 1px solid $primary;
+  padding: 5px 20px;
+  color: $tertiary;
+  outline: none;
+  font-family: PoppinsBold;
+  &::placeholder {
+    color: #666360;
+    font-family: PoppinsBold;
+  }
+}

@@ -1,0 +1,310 @@
+@import '../../variables';
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  header {
+    display: flex;
+    justify-content: flex-end;
+    .imgHeader {
+      width: 70vw;
+    }
+  }
+  .content {
+    z-index: 2;
+    flex: 1;
+    .welcomeContainer {
+      background: url('../../assets/bg-home.png');
+      background-repeat: no-repeat;
+      background-position: right 100% bottom 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 95%;
+      height: 300px;
+      margin: 6rem auto;
+
+      .title-welcome {
+        display: flex;
+
+        .welcome {
+          font-size: 1.5rem;
+          color: #fff;
+          font-family: PoppinsLight;
+          padding: 0 0.5rem 0 3rem;
+          margin-bottom: 0;
+          opacity: 0.6;
+
+          &.strong {
+            padding: 0;
+            margin: 0;
+            font-family: PoppinsBold;
+            opacity: 1;
+          }
+        }
+
+      }
+
+      .welcomeDescription {
+        font-family: Poppins;
+        max-width: 38rem;
+        font-size: 1rem;
+        padding: 0 3rem;
+        color: #fff;
+        opacity: 0.6;
+      }
+    }
+    .cardContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid $gray50;
+      border-radius: 6px;
+      background-color: #fff;
+      padding: 2rem 1rem;
+      width: 24rem;
+      height: 29rem;
+      position: absolute;
+      top: 30px;
+      right: 10%;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.12);
+
+      .cardLogo {
+        width: 14rem;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+      }
+      .cardTitle {
+        display: flex;
+
+        h1 {
+          font-size: 1.3rem;
+          font-family: PoppinsMedium;
+          margin-bottom: 1rem;
+        }
+        h1.strong {
+          margin-left: 4px;
+          font-family: PoppinsBold;
+          color: $blue;
+        }
+
+      }
+      .cardLoginButton {
+        border: 4px solid $detalhes;
+        color: $tertiary;
+        font-family: PoppinsBold;
+        width: 80%;
+        padding: .5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          margin-left: 4px;
+          width: 30px;
+        }
+
+        &:hover {
+          background-color: $detalhes;
+        }
+      }
+      .cardTextOu {
+        color: $tertiary;
+        margin: .5rem;
+        font-family: PoppinsBold;
+      }
+      .cardCadastroButton {
+        border: 4px solid $detalhes;
+        color: $tertiary;
+        font-family: PoppinsBold;
+        width: 80%;
+        padding: .5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          margin-left: 4px;
+          width: 30px;
+        }
+
+        &:hover {
+          background-color: $detalhes
+        }
+      }
+    }
+    .infoContainer {
+      display: flex;
+      height: 16rem;
+      width: 90%;
+      border: 2px solid $gray400;
+      margin: 12rem auto 6rem auto;
+      border-radius: 6px;
+
+      .infoLogo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 300px;
+          padding: 2rem 1rem;
+        }
+      }
+
+      .infoContent {
+        background: $gray400;
+        flex: 1;
+
+        .infoTitle {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.2rem;
+          margin-top: 0.4rem;
+
+          .details {
+            width: 70px;
+            height: 8px;
+            background-color: $detalhes;
+            margin: 0  10px 0 30px ;
+          }
+
+          h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-family: PoppinsBold;
+            margin-bottom: 0;
+          }
+        }
+        .info {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          row-gap: 20px;
+          margin: 0 100px;
+
+          .rowInfo {
+            display: flex;
+            align-items: center;
+
+            img {
+              height: 35px;
+              margin-right: 12px;
+            }
+            span {
+              color: #fff;
+              font-family: PoppinsMedium;
+              font-size: 1.3rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .footerHome {
+    background: url('../../assets/bg-footer.png');
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 100px 0 16px;
+
+    .footerContent {
+
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 6rem;
+
+      .footerTitle {
+        color: #fff;
+        font-size: 1.5rem;
+        font-family: PoppinsBold;
+      }
+
+      .enderecoFooter {
+        width: 500px;
+        color: #fff;
+
+        div {
+          margin-bottom: 18px;
+        }
+
+        .city {
+          color: #fff;
+          font-size: 1rem;
+          font-family: Poppins;
+        }
+        .endereco {
+          color: #fff;
+          font-size: 1rem;
+          font-family: Poppins;
+          line-height: 3px;
+        }
+      }
+      .redesSociais {
+        margin-bottom: 18px;
+
+        .iconsContainer {
+          display: flex;
+          margin-bottom: 1rem;
+          a {
+            +a {
+              margin-left: 12px ;
+            }
+            img {
+              height: 24px;
+            }
+          }
+        }
+        > a {
+          color: #fff;
+          font-family: PoppinsBold;
+          margin-top: 1rem;
+        }
+
+        .links {
+          display: flex;
+          flex-direction: column;
+          margin-top: 50px;
+
+          a {
+
+            font-size: 1.2rem;
+            color: #fff;
+
+            + a {
+              margin-top: 14px;
+            }
+
+            span {
+              font-family: PoppinsBold;
+            }
+          }
+
+        }
+      }
+    }
+
+    .divider {
+      width: 90%;
+      height: 2px;
+      background: #fff;
+      margin: 0 auto 40px;
+    }
+    .copyright {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px 14px;
+      box-sizing: border-box;
+
+      img {
+        height: 20px;
+      }
+
+      span {
+        opacity: 0.7;
+      }
+    }
+  }
+}

@@ -1,0 +1,219 @@
+@import '../../variables';
+
+.faturaContainer {
+  background-color: $quaternary;
+  margin-left: 2px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 0;
+  header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .headerTitulo {
+      display: flex;
+      justify-content: space-between;
+      .tituloPagina {
+        display: flex;
+        align-items: center;
+        .detalhe {
+          content: '';
+          width: 66px;
+          background: $detalhes;
+          height: 8px;
+          margin-right: 20px;
+        }
+        h1 {
+          font-size: 1.6rem;
+          color: $tertiary;
+          font-family: PoppinsBold;
+          margin: 0;
+        }
+      }
+    }
+    .pesquisar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35%;
+      height: 40px;
+      border: 1px solid $gray100;
+      background-color: #fff;
+      padding: 5px 10px;
+      margin: 0 40px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+
+      img {
+        height: 18px;
+        margin-right: 5px;
+      }
+      input {
+        width: 90%;
+        border: none;
+        outline: none;
+        color: $blue;
+
+        &::-webkit-input-placeholder {
+          color: $blue;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: $blue;
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+            color: $blue;
+        }
+
+        &:-ms-input-placeholder {
+            color: $blue;
+        }
+      }
+    }
+  }
+  .faturaTable {
+    margin-top: 20px;
+    border-top-left-radius: 10px !important;
+    }
+    .tableCell {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: #fff;
+      border-top: 10px solid #fff;
+      padding: 12px;
+      color: $tertiary;
+      img {
+        display: block;
+        height: 15px;
+      }
+      span {
+        max-width: 220px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: PoppinsMedium;
+      }
+    }
+    .ticketsCell {
+      color: #fff;
+      background-color: $secundary;
+      border-top: 10px solid $secundary;
+      font-family: PoppinsBold;
+    }
+    .noteButton {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid $detalhes;
+      background: none !important;
+      padding: 10px;
+      img {
+        display: block;
+        height: 30px;
+        filter: grayscale(120%) invert(100%);
+      }
+      span {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: PoppinsBold;
+      }
+    }
+    .stateCell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $encerrado;
+      padding: 10px;
+      border-radius: 10px;
+      color: #fff;
+      img {
+        display: block;
+        height: 15px;
+      }
+      span {
+        text-align: center;
+        line-height: 15px;
+      }
+    }
+  }
+
+  .column-title {
+    padding-left: 10px;
+  }
+
+  .ant-table-column-sorter {
+    padding-right: 10px;
+  }
+
+
+.ant-table-thead>tr.ant-table-row-hover:not(.ant-table-expanded-row)>td,
+.ant-table-tbody>tr.ant-table-row-hover:not(.ant-table-expanded-row)>td,
+.ant-table-thead>tr:hover:not(.ant-table-expanded-row)>td,
+.ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td {
+    background: unset !important; //Change the existing color to `unset`
+}
+
+.ant-table-thead {
+  tr{
+    border-top-left-radius: 10px !important;
+    th{
+    background-color: $tertiary !important;
+    color: white !important;
+    font-weight: 500;
+    text-align: left;
+    padding: 0 !important;
+    border-bottom: none !important;
+    }
+  }
+}
+
+.ant-table-empty .ant-table-tbody > tr.ant-table-placeholder {
+  color: white !important;
+}
+
+.ant-pagination-options {
+  width: 160px !important;
+}
+
+.ant-empty-description {
+  color: #fff !important;
+}
+
+.ant-pagination-options-size-changer.ant-select {
+  width: 100% !important;
+}
+
+td.ant-table-column-sort {
+  background: $primary !important;
+}
+
+.ant-table-tbody  {
+  background-color: $primary !important;
+
+  tr {
+    td {
+      padding: 10px !important;
+      border: none !important;
+      box-sizing: border-box;
+      height: 100% !important;
+    }
+    .ant-table-placeholder{
+      background-color: $primary !important;
+
+      &:hover {
+        background-color: $primary !important;
+      }
+    }
+  }
+}
+// td {
+//   padding: 0 !important;
+//   height: 60px;
+// }

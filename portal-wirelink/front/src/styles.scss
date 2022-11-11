@@ -1,0 +1,40 @@
+@import './reset';
+@import './variables';
+
+@font-face {
+  font-family: Poppins;
+  src: url('./assets/fonts/Poppins/Poppins-Regular.ttf');
+}
+@font-face {
+  font-family: PoppinsBold;
+  src: url('./assets/fonts/Poppins/Poppins-Bold.ttf');
+}
+@font-face {
+  font-family: PoppinsMedium;
+  src: url('./assets/fonts/Poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: PoppinsLight;
+  src: url('./assets/fonts/Poppins/Poppins-Light.ttf');
+}
+
+@font-face {
+  font-family: PoppinsExtraLight;
+  src: url('./assets/fonts/Poppins/Poppins-ExtraLight.ttf');
+}
+
+@font-face {
+  font-family: PoppinsExtraBold;
+  src: url('./assets/fonts/Poppins/Poppins-ExtraBold.ttf');
+}
+
+.export-modal {
+  .ant-modal-title {
+    font-size: 1.6rem;
+    color: #373D3E;
+    font-family: PoppinsBold;
+    margin: 0;
+    padding: 20px;
+  }
+}

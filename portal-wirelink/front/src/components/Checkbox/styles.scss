@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.checkboxContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkboxLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: $tertiary;
+  span {
+    font-family: PoppinsMedium;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+
+input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+}

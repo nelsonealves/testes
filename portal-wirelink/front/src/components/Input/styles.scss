@@ -1,0 +1,46 @@
+@import '../../variables';
+
+.inputContainer {
+  width: 100%;
+  margin-top: 10px;
+
+  &.branco{
+    .label {
+      color: #fff;
+    }
+  }
+
+}
+
+
+.label {
+  display: flex;
+  flex-direction: column;
+  color: $tertiary;
+  span {
+    font-family: PoppinsMedium;
+    margin-bottom: 4px;
+  }
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: 1px solid $gray50;
+  height: 40px !important;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  color: $blue;
+  outline: none;
+  text-align: center;
+  font-family: Poppins;
+  &::placeholder {
+    color: #666360;
+    font-family: Poppins;
+  }
+}
+
+input[type=password] {
+  padding: 3px 10px;
+  font-size: 24px;
+}

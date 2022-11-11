@@ -1,0 +1,218 @@
+@import '../../variables';
+
+.suporteContainer {
+  background-color: $quaternary;
+  margin-left: 2px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 0;
+  header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .headerTitulo {
+      display: flex;
+      justify-content: space-between;
+      .tituloPagina {
+        display: flex;
+        align-items: center;
+        .detalhe {
+          content: '';
+          width: 66px;
+          background: $detalhes;
+          height: 8px;
+          margin-right: 20px;
+        }
+        h1 {
+          font-size: 1.6rem;
+          color: $tertiary;
+          font-family: PoppinsBold;
+          margin: 0;
+        }
+      }
+    }
+    .pesquisar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35%;
+      height: 40px;
+      border: 1px solid $gray100;
+      background-color: #fff;
+      padding: 5px 10px;
+      margin: 0 40px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+
+
+      img {
+        height: 18px;
+        margin-right: 5px;
+      }
+      input {
+        width: 90%;
+        border: none;
+        outline: none;
+        color: $blue;
+
+        &::-webkit-input-placeholder {
+          color: $blue;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: $blue;
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+            color: $blue;
+        }
+
+        &:-ms-input-placeholder {
+            color: $blue;
+        }
+      }
+    }
+    .ingressoButton {
+      display: flex;
+      align-items: center;
+      color: $tertiary;
+      border: 4px solid $detalhes;
+      font-family: PoppinsMedium;
+      background: none;
+      padding: 10px 20px;
+
+      &:hover {
+        background: $detalhes;
+      }
+
+      img {
+        height: 18px;
+        margin-left: 10px;
+      }
+    }
+    .headerContent {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .resultsPages {
+        color: $tertiary;
+        font-size: 1rem;
+      }
+    }
+  }
+  .suportTable {
+    margin-top: 20px;
+
+    .tableCell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      padding: 10px;
+      border-bottom: 4px solid #fff;
+      color: $tertiary;
+      overflow: hidden;
+      white-space: nowrap;
+
+      &.buttonVer {
+        padding: 10px;
+        border-bottom: 10px solid #fff;
+        text-align: initial;
+      }
+
+      img {
+        display: block;
+        height: 15px;
+      }
+      span {
+        max-width: 170px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.5rem;
+        font-family: PoppinsMedium;
+      }
+    }
+    .ticketsCell {
+      color: #fff;
+      background-color: $secundary;
+      border-bottom: 4px solid $secundary;
+      span {
+        font-family: PoppinsMedium;
+      }
+    }
+    .stateCell {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      background-color: $encerrado;
+      padding: 10px;
+      color: #fff;
+      img {
+        display: block;
+        height: 16px;
+      }
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2px;
+        max-width: 100px;
+        width: 100%;
+        overflow: hidden;
+        font-size: 0.7rem;
+        line-height: 0.7rem;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        flex-wrap: wrap;
+        font-family: PoppinsMedium;
+      }
+    }
+    .andamento {
+      background-color: $andamento;
+      border-top: 4px solid $andamento;
+      padding: 6px;
+      color: #0153CE;
+      font-size: 0.6rem;
+      span {
+        margin-top: 6px;
+      }
+    }
+    .agendamento {
+      background-color: $pendenteAgendamento;
+      border-top: 6px  solid $pendenteAgendamento;
+      padding: 2px 10px;
+    }
+    .cliente {
+      background-color: $pendenteCliente;
+      border-top: 8px  solid $pendenteCliente;
+      padding: 0 10px;
+
+    }
+    .validacao {
+      background-color: $pendenteValidacao;
+      border-top: 8px  solid $pendenteValidacao;
+      padding: 0 10px;
+    }
+    .cancelado {
+      background-color: $quaternary;
+      border-top: 4px  solid $quaternary;
+      color: #0153CE;
+      padding: 6px;
+
+      span {
+        margin-top: 6px;
+      }
+    }
+  }
+
+  .column-title {
+    padding-left: 10px;
+  }
+
+  .ant-table-column-sorter {
+    padding-right: 10px;
+  }
+}
