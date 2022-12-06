@@ -27,22 +27,22 @@ export const getRangeOfClient = async (startID: number, range: number): Promise<
   });
 
   if (!tblclients) return {} as ClientRepository.Result;
-
+  await prismaClient.$disconnect()
   return tblclients.map(client => {
     return {
       id: client.id,
-      address1: client.address1,
-      address2: client.address2,
-      city: client.city,
-      country: client.country,
+      address1: client.address1!,
+      address2: client.address2!,
+      city: client.city!,
+      country: client.country!,
       document: client.document!,
       email: client.email,
       postcode: client.postcode,
       state: client.state,
       updated_at: client.updated_at,
       firstName: client.firstName!,
-      lastName: client.lastName!,
-
+      lastName: client.lastName! || client.companyname!,
+      companyname: client.companyname!
     }
   })
 }
@@ -59,6 +59,7 @@ export type Client = {
   postcode: string
   document: string
   country: string
+  companyname: string
   updated_at: Date
 }
 export namespace ClientRepository {

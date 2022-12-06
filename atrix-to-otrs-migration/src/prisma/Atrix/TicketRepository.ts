@@ -1,42 +1,68 @@
+import { PrismaClient } from "@internal/.prisma/Atrix/client"
 
-import {} from "@/models"
+const prismaClient = new PrismaClient()
 
-export const getRangeOfClient = (start:number) => {
-    const tblclients = await this.ormRepository.tblclients.findMany({
+export const getTickets = async (idContract:number) => {
+    const ticketsArray = await prismaClient.tbltickets.findMany({
         where: {
-          id: {
-            gt: id
+          AND: [
+            {
+              serviceid: idContract
+            },
+            {
+              status: "Open"
+            }
+          ]
+          
+        },
+        orderBy: {
+          id: 'asc'
+        },
+        include: {
+          tblclients: true,
+          tblticketdepartments: true,
+          tblhosting: {
+            include: {
+              tblproducts: {
+                include: {
+                  tblproductgroups: true
+                }
+              }
+            }
           }
+
         }
       })
         
         
 
-      if (!tblclients) return {} as GetLatestClientsRepository.Result;
+      if (!ticketsArray) return {} as TicketRepository.Result;
 
-      const clientsArray: GetLatestClientsRepository.Result = tblclients.map(client => {
+      const tickets: TicketRepository.Result = ticketsArray.map(ticket => {
         return {
-          id: client.id,
-          customer_id: (client.id).toString(),
-          name: `${client.firstName} ${client.lastName}`,
-          CNPJ: client.document,
-          street: client.address1,
-          district: client.state,
-          UF: client.state,
-          zip: client.postcode,
-          country: client.country,
-          city: client.city,
-          comments: '-',
-          updated_at: client.updated_at!
+          id: ticket.id,
+            tid: ticket.tid,
+            customer_id: `${ticket.tblclients?.document!}`,
+            queue_id: ticket?.tblticketdepartments?.id!,
+            service_id: ticket.typerequest!,
+            title: ticket.title,
+            a_subject: ticket.title,
+            a_body: ticket.message,
           
         };
       })
-
-      return clientsArray
+      await prismaClient.$disconnect()
+      return tickets
 }
 
-export namespace ClientRepository {
+export namespace TicketRepository {
     export type Result = {
-
+      id: number
+      tid: number
+      customer_id: string
+      queue_id: number
+      service_id: number
+      a_subject: string
+      a_body: string
     } 
 }

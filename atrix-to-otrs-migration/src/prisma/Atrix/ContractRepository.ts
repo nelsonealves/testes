@@ -8,7 +8,7 @@ export const getContractsOfClient = async (clientID: number): Promise<ContractRe
 
   const contractsQuery: ContractRepository.Result = await prismaClient.tblhosting.findMany({
     where: {
-      id: clientID
+      userid: clientID
     },
     orderBy: {
       id: 'asc'
@@ -45,29 +45,32 @@ export const getContractsOfClient = async (clientID: number): Promise<ContractRe
 
     return {
       id: contract.id,
-      first_name: contract.tblclients.firstName!,
-      last_name: contract.tblclients.lastName!,
-      customer_id: `${contract.tblclients.id}`,
-      login: `${contract.id!} - ${contract.tblproducts?.tblproductgroups.name} - ${contract.tblproducts?.tblproductgroups.subcategory}`,
-      zip: contract.tbladdress ? contract.tbladdress.postcode! : contract.tblclients.postcode!,
-      street: contract.tbladdress ? contract.tbladdress.address! : contract.tblclients.address1!,
+      first_name: contract.tblclients?.firstName!,
+      last_name: contract.tblclients?.lastName!,
+      customer_id: `${contract.tblclients?.document}`,
+      login: `${contract.numplan!} - ${contract.tblproducts?.tblproductgroups.name} - ${contract.tblproducts?.tblproductgroups.subcategory} - ${contract.id!}`,
+      zip: contract.tbladdress ? contract.tbladdress.postcode! : contract.tblclients?.postcode!,
+      street: contract.tbladdress ? contract.tbladdress.address! : contract.tblclients?.address1!,
       number: `${contract.tbladdress?.number!}`,
       sala: contract.tbladdress?.room! || '',
       complemento: contract.tbladdress?.complement || '',
-      city: contract.tbladdress ? `${contract.tbladdress.tblcities?.name}` : contract.tblclients.city!,
-      uf: contract.tbladdress ? contract.tbladdress.state! : contract.tblclients.state!,
+      city: contract.tbladdress ? `${contract.tbladdress.tblcities?.name}` : contract.tblclients?.city!,
+      uf: contract.tbladdress ? contract.tbladdress.state! : contract.tblclients?.state!,
       tipo_de_servico_contratado: `${contract.tblproducts?.tblproductgroups.subcategory} - ${contract.tblproducts?.tblproductgroups.name} - ${contract.tblproducts?.name}  `,
       velocidade: contract.tblhostingconfigoptions?.tblproductconfigoptionssub?.optionname!,
-      nome_do_contato_tecnico: `${contract.tblclients.tblcontacts[0]?.firstname!} ${contract.tblclients.tblcontacts[0]?.lastname!}`,
-      telefone_de_contato_tecnico: contract.tblclients.tblcontacts[0]?.phonenumber!,
+      nome_do_contato_tecnico: `${contract.tblclients?.tblcontacts[0]?.firstname!} ${contract.tblclients?.tblcontacts[0]?.lastname!}`,
+      telefone_de_contato_tecnico: contract.tblclients?.tblcontacts[0]?.phonenumber!,
       nome_do_cliente: contract.tblclients?.firstName!,
       cnpj: contract.tblclients?.document!,
       email: contract.tblclients?.email!,
-      numero_do_plano: contract.id!,
-      updated_at: new Date(contract.updated_at!)
+      designacao: contract.designator!,
+      numero_do_plano: contract.numplan!,
+      updated_at: new Date(contract.updated_at!),
+      classification: contract.classification!
     }
   })
 
+  await prismaClient.$disconnect()
   return contracts;
 
 }

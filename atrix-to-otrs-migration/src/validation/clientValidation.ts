@@ -1,8 +1,8 @@
-import { ClientRepository, Client } from "@/prisma/Atrix/ClientRepository"
+import { ClientOtrs } from "@/prisma/Otrs/ClientRepository"
 
-export const clientValidation = (client: Client): Boolean => {
+export const clientValidation = (client: ClientOtrs): Boolean => {
     
-    const validation = !(client.document === '') || !(client.firstName === '') || !(client.email === '')
-
+    const validation = (client.customer_id === '') || (client.name === '') || (client.razao_social === '') 
+    // console.log({client,validation})
     return validation
 }

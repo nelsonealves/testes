@@ -12,6 +12,8 @@ export const getClientOnOtrs = async (document: string): Promise<ClientOtrsRepos
             }
         });
 
+        if (!clientOtrs) return {} as ClientOtrsRepository.Result
+        
         return {
             customer_id: clientOtrs?.customer_id!,
             name: clientOtrs?.name!,
@@ -23,9 +25,11 @@ export const getClientOnOtrs = async (document: string): Promise<ClientOtrsRepos
             city: clientOtrs?.city!,
             country: clientOtrs?.country!,
             comments: clientOtrs?.comments!,
+            razao_social: clientOtrs?.razao_social
 
         }
     } catch (err) {
+        console.log(err)
         return {} as ClientOtrsRepository.Result
     }
 
@@ -43,6 +47,7 @@ export type ClientOtrs = {
     zip: string
     city: string
     country: string
+    razao_social: string
     comments: string
 }
 export namespace ClientOtrsRepository {

@@ -10,53 +10,77 @@ datasource db {
 
 model customer_company {
   customer_id   String          @id @db.VarChar(150)
-  name          String          @unique @db.VarChar(200)
-  CNPJ          String          @db.VarChar(100)
-  street        String          @db.VarChar(200)
-  zip           String          @db.VarChar(200)
-  city          String          @db.VarChar(200)
-  country       String          @db.VarChar(200)
-  comments      String          @db.VarChar(250)
-  district      String          @db.VarChar(200)
-  UF            String          @db.VarChar(2)
+  name          String?         @unique @db.VarChar(200)
+  CNPJ          String?         @db.VarChar(100)
+  street        String?         @db.VarChar(200)
+  zip           String?         @db.VarChar(200)
+  city          String?         @db.VarChar(200)
+  country       String?         @db.VarChar(200)
+  comments      String?         @db.VarChar(250)
+  district      String?         @db.VarChar(200)
+  UF            String?         @db.VarChar(2)
   valid_id      Int             @db.Int
-  create_time   DateTime        @db.Date @default(now())
-  change_time   DateTime        @db.Date @default(now())
+  razao_social  String?         @db.VarChar(100)
+  // create_time   DateTime        @default(now()) @db.Date
+  // change_time   DateTime        @default(now()) @db.Date
   customer_user customer_user[] @relation("customer_user_company")
 }
 
 model customer_user {
-  id               Int               @id @default(autoincrement())
-  login            String            @unique @db.VarChar(200)
-  customer_id      String            @unique @db.VarChar(250)
-  customer_company customer_company? @relation("customer_user_company", fields: [customer_id], references: [customer_id])
-  ticket           ticket[]          @relation("customer_user_ticket")
+  id                          Int               @id @default(autoincrement()) @db.Int
+  login                       String            @db.VarChar(200)
+  customer_id                 String            @db.VarChar(150)
+  first_name                  String?           @db.VarChar(200)
+  last_name                   String?           @db.VarChar(200)
+  zip                         String?           @db.VarChar(200)
+  street                      String?           @db.VarChar(150)
+  number                      String?           @db.VarChar(100)
+  sala                        String?           @db.VarChar(100)
+  complemento                 String?           @db.VarChar(100)
+  city                        String?           @db.VarChar(200)
+  uf                          String?           @db.VarChar(100)
+  tipo_de_servico_contratado  String?           @db.VarChar(100)
+  velocidade                  String?           @db.VarChar(100)
+  nome_do_contato_tecnico     String?           @db.VarChar(100)
+  telefone_de_contato_tecnico String?           @db.VarChar(100)
+  nome_do_cliente             String?           @db.VarChar(150)
+  cnpj                        String?           @db.VarChar(100)
+  designacao                  String?           @db.VarChar(100)
+  email                       String            @db.VarChar(150)
+  // create_time                 DateTime?         @default(now())
+  // change_time                 DateTime          @default(now())
+  numero_do_plano             Int?              @db.Int
+  create_by                   Int               @db.Int
+  change_by                   Int               @db.Int
+  valid_id                    Int               @db.Int
+  customer_company            customer_company? @relation("customer_user_company", fields: [customer_id], references: [customer_id])
+  ticket                      ticket[]          @relation("customer_user_ticket")
 
   @@unique([login, customer_id], name: "customer_ticket")
 }
 
 model ticket {
-  id                  Int      @id @default(autoincrement())
-  queue_id            Int      @db.Int()
-  service_id          Int?     @db.Int()
-  customer_id         String?  @unique @db.VarChar(250)
-  customer_user_id    String?  @unique @db.VarChar(250)
-  title               String   @db.VarChar(250)
-  ticket_lock_id      Int      @db.SmallInt() // ticket_lock_type table
-  user_id             Int      @db.Int() //users table
-  responsible_user_id Int      @db.Int() // users table
-  ticket_priority_id  Int      @db.SmallInt() //ticket_priority table
-  ticket_state_id     Int      @db.SmallInt() // ticket_state table
-  create_by           Int      @db.Int() // users table
-  change_by           Int      @db.Int() // users table
-  tn                  String
-  change_time         DateTime @db.Date
-
-  articles      article[]      @relation("ticket_articles")
-  ticket_state  ticket_state   @relation("ticket_ticket_state", fields: [ticket_state_id], references: [id])
-  queue         queue          @relation("ticket_queue", fields: [queue_id], references: [id])
-  service       service?       @relation("ticket_service", fields: [service_id], references: [id])
-  customer_user customer_user? @relation("customer_user_ticket", fields: [customer_user_id, customer_id], references: [login, customer_id])
+  id                    Int            @id @default(autoincrement())
+  queue_id              Int?           @db.Int()
+  service_id            Int?           @db.Int()
+  customer_id           String?        @unique @db.VarChar(250)
+  customer_user_id      String?        @unique @db.VarChar(250)
+  title                 String?        @db.VarChar(250)
+  ticket_lock_id        Int?           @db.SmallInt() // ticket_lock_type table
+  user_id               Int?           @db.Int() //users table
+  responsible_user_id   Int?           @db.Int() // users table
+  ticket_priority_id    Int?           @db.SmallInt() //ticket_priority table
+  ticket_state_id       Int?           @db.SmallInt() // ticket_state table
+  create_by             Int?           @db.Int() // users table
+  change_by             Int?           @db.Int() // users table
+  tn                    String?
+  // change_time         DateTime? @db.Date
+  customer_id_reference String?        @db.VarChar(200)
+  articles              article[]      @relation("ticket_articles")
+  ticket_state          ticket_state?  @relation("ticket_ticket_state", fields: [ticket_state_id], references: [id])
+  queue                 queue?         @relation("ticket_queue", fields: [queue_id], references: [id])
+  service               service?       @relation("ticket_service", fields: [service_id], references: [id])
+  customer_user         customer_user? @relation("customer_user_ticket", fields: [customer_user_id, customer_id], references: [login, customer_id])
 
   @@index([customer_user_id, customer_id], name: "customer_ticket")
 }

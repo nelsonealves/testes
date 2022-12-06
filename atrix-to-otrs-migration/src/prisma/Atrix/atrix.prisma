@@ -19,8 +19,9 @@ model tblclients {
   state       String        @db.VarChar(100)
   postcode    String        @db.VarChar(30)
   document    String?       @db.VarChar(100)
-  country     String        @db.VarChar(60)
+  country     String?       @db.VarChar(60)
   updated_at  DateTime      @db.Date
+  companyname String?       @db.VarChar(150)
   tblcontacts tblcontacts[] @relation("tblcontacts_tblclient")
   tblhosting  tblhosting[]  @relation("tblclients_tblhosting")
   tbltickets  tbltickets[]  @relation("tblclients_tbltickets")
@@ -38,17 +39,30 @@ model tblcontacts {
 model tblhosting {
   id                      Int                      @id @default(autoincrement())
   userid                  Int                      @db.Int
-  packageid               Int?                      @db.Int
+  numplan                 Int?                     @db.Int
+  packageid               Int?                     @db.Int
   domain                  String?                  @db.VarChar(100)
   username                String?                  @db.VarChar(100)
   password                String?                  @db.VarChar(100)
+  classification          String?                  @db.VarChar(100)
+  designator              String?                  @db.VarChar(250)
   updated_at              DateTime?                @db.Date
-  tblclients              tblclients               @relation("tblclients_tblhosting", references: [id], fields: [userid])
+  domainstatus            domainStatus?
+  tblclients              tblclients?              @relation("tblclients_tblhosting", references: [id], fields: [userid])
   tblproducts             tblproducts?             @relation("tblproducts_tblhosting", references: [id], fields: [packageid])
   // tbladdress  tbladdress  @relation("tbladdress_tblhosting", references: [relid], fields: [id])
   tbladdress              tbladdress?              @relation("tbladdress_tblhosting")
   tbltickets              tbltickets[]             @relation("tblhosting_tbltickets")
   tblhostingconfigoptions tblhostingconfigoptions? @relation("tblhostingconfigoptions_tblhosting")
+}
+
+enum domainStatus {
+  Pending
+  Active
+  Suspended
+  Terminated
+  Cancelled
+  Fraud
 }
 
 model tblproducts {
@@ -107,17 +121,18 @@ model tblcities {
 }
 
 model tbltickets {
-  id                   Int                  @id @db.Int
+  id                   Int                  @id @default(autoincrement())
+  tid                  String?               @db.VarChar(128)
   userid               Int?                 @db.Int
-  did                  Int                  @db.Int
+  did                  Int?                  @db.Int
   serviceid            Int?                 @db.Int
-  title                String               @db.Text
-  message              String               @db.Text
-  status               String               @db.VarChar(64)
+  title                String?               @db.Text
+  message              String?               @db.Text
+  status               String?               @db.VarChar(64)
   typerequest          Int?                 @db.Int
   tblhosting           tblhosting?          @relation("tblhosting_tbltickets", references: [id], fields: [serviceid])
   tblclients           tblclients?          @relation("tblclients_tbltickets", references: [id], fields: [userid])
-  tblticketdepartments tblticketdepartments @relation("tblticketdepartments_tbltickets", references: [id], fields: [did])
+  tblticketdepartments tblticketdepartments? @relation("tblticketdepartments_tbltickets", references: [id], fields: [did])
 }
 
 model tblticketdepartments {
