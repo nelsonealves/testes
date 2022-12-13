@@ -13,7 +13,7 @@ export const contractDataByIdOtrs = async (idOtrs: number): Promise<ContractData
         })
 
         if (!contractData) return {} as ContractDataRepository.Result
-
+        await prismaClient.$disconnect()
         return contractData
     } catch (err) {
         return err as ContractDataRepository.Result
@@ -31,7 +31,7 @@ export const contractDataByIdAtrix = async (idAtrix: number): Promise<ContractDa
         })
 
         if (!contractData) return {} as ContractDataRepository.Result
-
+        await prismaClient.$disconnect()
         return contractData
     } catch (err) {
         return err as ContractDataRepository.Result
@@ -49,7 +49,7 @@ export const deleteContractData = async (idAtrix: number): Promise<any> => {
         })
 
         if (!contractData) return [] as ContractDataRepository.Result
-
+        await prismaClient.$disconnect()
         return contractData
     } catch (err) {
         return err as ContractDataRepository.Result

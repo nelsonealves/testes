@@ -13,7 +13,7 @@ export const getContractsOfClientOtrs = async (customer_id: string): Promise<Con
         });
 
         if (!contractOtrs) return [] as ContractOtrsRepository.Result
-        
+        await prismaClient.$disconnect()
         return contractOtrs.map(contract => {
             return {
                 id: contract.id,
@@ -37,7 +37,7 @@ export const deleteAllContracts = async (customer_id: string): Promise<any> => {
                 customer_id: customer_id
             }
         });
-
+        await prismaClient.$disconnect()
         if (!contractOtrs) return [] as ContractOtrsRepository.Result
         
         return contractOtrs

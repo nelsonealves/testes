@@ -41,9 +41,9 @@ export const updateTicketCustomerIdReference = async (idTicket: number, cnpj: st
                 customer_id_reference: cnpj
             }
         });
-
+        await prismaClient.$disconnect()
         if (!tickets) return [] as TicketOtrsRepository.Result
-
+        
         return tickets
 
     } catch (err) {
@@ -92,10 +92,30 @@ export const getRangeOfTicketOtrs = async (idTicket: number, range: number): Pro
 
 }
 
+export const updateCustomerIdReference = async (ticket: Pick<TicketOtrs, "customer_id" | "customer_user_id">) => {
+    const tickets = await prismaClient.ticket.update({
+        where: {
+            customer_id: ticket.customer_id
+          
+        },
+        data: {
+            customer_id_migration_reference: ticket.customer_id,
+            customer_user_id_migration_reference: ticket.customer_user_id
+        }
+      })
+        
+      
+      await prismaClient.$disconnect()
+      return tickets
+  }
+
 export type TicketOtrs = {
     id: number
     login: string
     customer_id: string
+    customer_user_id: string
+    customer_id_migration_reference: string
+    customer_user_id_migration_reference: string
 }
 export namespace TicketOtrsRepository {
     export type Result = TicketOtrs[]

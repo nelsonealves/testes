@@ -11,7 +11,7 @@ export const createClient = async (idClient: number) => {
                 idClient
             }
         })
-
+        
         return tickets.data
     } catch (err) {
         return err

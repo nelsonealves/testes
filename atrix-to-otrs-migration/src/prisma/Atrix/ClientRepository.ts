@@ -17,6 +17,9 @@ export const getRangeOfClient = async (startID: number, range: number): Promise<
           id: {
             lt: startID + range
           }
+        },
+        {
+          typeclient: 'J'
         }
       ]
 
@@ -42,7 +45,8 @@ export const getRangeOfClient = async (startID: number, range: number): Promise<
       updated_at: client.updated_at,
       firstName: client.firstName!,
       lastName: client.lastName! || client.companyname!,
-      companyname: client.companyname!
+      companyname: client.companyname!,
+      typeclient: client.typeclient
     }
   })
 }
@@ -61,6 +65,7 @@ export type Client = {
   country: string
   companyname: string
   updated_at: Date
+  typeclient: string
 }
 export namespace ClientRepository {
   export type Result = Array<Client>

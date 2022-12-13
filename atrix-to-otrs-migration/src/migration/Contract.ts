@@ -8,25 +8,25 @@ import { createContract } from "@/endpoints/Axios/CreateContract"
 import { runCacheClean } from "@/endpoints/Axios/RunCacheCleanOtrs"
 import { contractDataByIdAtrix, deleteContractData } from "@/prisma/Corpintegrator/contractData"
 
-export const contractMigration = async (clientIDAtrix: number, clientIDOtrs: string): Promise<Boolean> => {
+export const contractMigration = async (clientIDAtrix: number | null, clientIDOtrs: string | null): Promise<Boolean> => {
 
     // console.log({clientIDAtrix, clientIDOtrs})
 
     const contractsOfClientAtrix: ContractRepository.Result = await getContractsOfClientAtrix(clientIDAtrix)
 
-    console.log({ contractsOfClientAtrix })
+    // console.log({ contractsOfClientAtrix })
 
     console.log({contractsOfClientAtrix})
-    if ((contractsOfClientAtrix.length > 0)) { // Se não for vazio, existe contract
+    if ((contractsOfClientAtrix.length > 0) && clientIDAtrix !== null && clientIDOtrs !== null ) { // Se não for vazio, existe contract
         await deleteAllContracts(clientIDOtrs)
         await contractsOfClientAtrix.map(async contract => {
 
             const contractData = await deleteContractData(contract.id) // Limpa contract data (se tiver)
             await runCacheClean(contract.login) /// Limpa cache do otrs
-            console.log({ contractData })
+            // console.log({ contractData })
             
             const result = await createContract(contract.id)
-            console.log({ result: result })
+            // console.log({ result: result })
             // await ticketMigration(contract.id)
         })
     }

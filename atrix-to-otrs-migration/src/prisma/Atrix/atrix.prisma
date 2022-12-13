@@ -22,6 +22,7 @@ model tblclients {
   country     String?       @db.VarChar(60)
   updated_at  DateTime      @db.Date
   companyname String?       @db.VarChar(150)
+  typeclient  String        @db.VarChar(1)
   tblcontacts tblcontacts[] @relation("tblcontacts_tblclient")
   tblhosting  tblhosting[]  @relation("tblclients_tblhosting")
   tbltickets  tbltickets[]  @relation("tblclients_tbltickets")
@@ -121,17 +122,17 @@ model tblcities {
 }
 
 model tbltickets {
-  id                   Int                  @id @default(autoincrement())
+  id                   Int                   @id @default(autoincrement())
   tid                  String?               @db.VarChar(128)
-  userid               Int?                 @db.Int
+  userid               Int?                  @db.Int
   did                  Int?                  @db.Int
-  serviceid            Int?                 @db.Int
+  serviceid            Int?                  @db.Int
   title                String?               @db.Text
   message              String?               @db.Text
   status               String?               @db.VarChar(64)
-  typerequest          Int?                 @db.Int
-  tblhosting           tblhosting?          @relation("tblhosting_tbltickets", references: [id], fields: [serviceid])
-  tblclients           tblclients?          @relation("tblclients_tbltickets", references: [id], fields: [userid])
+  typerequest          Int?                  @db.Int
+  tblhosting           tblhosting?           @relation("tblhosting_tbltickets", references: [id], fields: [serviceid])
+  tblclients           tblclients?           @relation("tblclients_tbltickets", references: [id], fields: [userid])
   tblticketdepartments tblticketdepartments? @relation("tblticketdepartments_tbltickets", references: [id], fields: [did])
 }
 

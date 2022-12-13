@@ -13,6 +13,19 @@ export const updateClient = async ({ customer_id,
     comments,
     razao_social }: UpdateClientController.Request) => {
     try {
+        console.log( {
+            customer_id,
+            name,
+            CNPJ,
+            street,
+            district,
+            UF,
+            zip,
+            country,
+            city,
+            comments,
+            razao_social
+        })
         const clientUpdate = await axios.request({
             baseURL: "http://localhost:4000",
             url: '/api/client',

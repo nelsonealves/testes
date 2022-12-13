@@ -17,7 +17,7 @@ model customer_company {
   city          String?         @db.VarChar(200)
   country       String?         @db.VarChar(200)
   comments      String?         @db.VarChar(250)
-  district      String?         @db.VarChar(200)
+  
   UF            String?         @db.VarChar(2)
   valid_id      Int             @db.Int
   razao_social  String?         @db.VarChar(100)
@@ -60,27 +60,28 @@ model customer_user {
 }
 
 model ticket {
-  id                    Int            @id @default(autoincrement())
-  queue_id              Int?           @db.Int()
-  service_id            Int?           @db.Int()
-  customer_id           String?        @unique @db.VarChar(250)
-  customer_user_id      String?        @unique @db.VarChar(250)
-  title                 String?        @db.VarChar(250)
-  ticket_lock_id        Int?           @db.SmallInt() // ticket_lock_type table
-  user_id               Int?           @db.Int() //users table
-  responsible_user_id   Int?           @db.Int() // users table
-  ticket_priority_id    Int?           @db.SmallInt() //ticket_priority table
-  ticket_state_id       Int?           @db.SmallInt() // ticket_state table
-  create_by             Int?           @db.Int() // users table
-  change_by             Int?           @db.Int() // users table
-  tn                    String?
+  id                                   Int            @id @default(autoincrement())
+  queue_id                             Int?           @db.Int()
+  service_id                           Int?           @db.Int()
+  customer_id                          String?        @unique @db.VarChar(250)
+  customer_user_id                     String?        @unique @db.VarChar(250)
+  title                                String?        @db.VarChar(250)
+  ticket_lock_id                       Int?           @db.SmallInt() // ticket_lock_type table
+  user_id                              Int?           @db.Int() //users table
+  responsible_user_id                  Int?           @db.Int() // users table
+  ticket_priority_id                   Int?           @db.SmallInt() //ticket_priority table
+  ticket_state_id                      Int?           @db.SmallInt() // ticket_state table
+  create_by                            Int?           @db.Int() // users table
+  change_by                            Int?           @db.Int() // users table
+  tn                                   String?
   // change_time         DateTime? @db.Date
-  customer_id_reference String?        @db.VarChar(200)
-  articles              article[]      @relation("ticket_articles")
-  ticket_state          ticket_state?  @relation("ticket_ticket_state", fields: [ticket_state_id], references: [id])
-  queue                 queue?         @relation("ticket_queue", fields: [queue_id], references: [id])
-  service               service?       @relation("ticket_service", fields: [service_id], references: [id])
-  customer_user         customer_user? @relation("customer_user_ticket", fields: [customer_user_id, customer_id], references: [login, customer_id])
+  customer_id_migration_reference      String?        @db.VarChar(200)
+  customer_user_id_migration_reference String?        @db.VarChar(200)
+  articles                             article[]      @relation("ticket_articles")
+  ticket_state                         ticket_state?  @relation("ticket_ticket_state", fields: [ticket_state_id], references: [id])
+  queue                                queue?         @relation("ticket_queue", fields: [queue_id], references: [id])
+  service                              service?       @relation("ticket_service", fields: [service_id], references: [id])
+  customer_user                        customer_user? @relation("customer_user_ticket", fields: [customer_user_id, customer_id], references: [login, customer_id])
 
   @@index([customer_user_id, customer_id], name: "customer_ticket")
 }

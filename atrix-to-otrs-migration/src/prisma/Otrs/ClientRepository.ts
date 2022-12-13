@@ -13,19 +13,19 @@ export const getClientOnOtrs = async (document: string): Promise<ClientOtrsRepos
         });
 
         if (!clientOtrs) return {} as ClientOtrsRepository.Result
-        
+        await prismaClient.$disconnect()
         return {
             customer_id: clientOtrs?.customer_id!,
             name: clientOtrs?.name!,
             CNPJ: clientOtrs?.CNPJ!,
             street: clientOtrs?.street!,
-            district: clientOtrs?.district!,
+            
             UF: clientOtrs?.UF!,
             zip: clientOtrs?.zip!,
             city: clientOtrs?.city!,
             country: clientOtrs?.country!,
             comments: clientOtrs?.comments!,
-            razao_social: clientOtrs?.razao_social
+            razao_social: clientOtrs?.razao_social!
 
         }
     } catch (err) {
@@ -42,7 +42,7 @@ export type ClientOtrs = {
     name: string
     CNPJ: string
     street: string
-    district: string
+    
     UF: string
     zip: string
     city: string
